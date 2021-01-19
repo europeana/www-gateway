@@ -1,0 +1,1445 @@
+{
+	"info": {
+		"_postman_id": "2299f781-31e2-4b98-86a0-dc2f575829ef",
+		"name": "Europeana WWW gateway",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Content-Type for Linked Data media types",
+			"item": [
+				{
+					"name": ".jsonld",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Content-Type is application/ld+json\", function () {",
+									"  pm.response.to.have.header(\"Content-Type\");",
+									"  pm.response.to.be.header(\"Content-Type\", \"application/ld+json\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ORIGIN}}/schemas/context/edm.jsonld",
+							"host": [
+								"{{ORIGIN}}"
+							],
+							"path": [
+								"schemas",
+								"context",
+								"edm.jsonld"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": ".n3",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Content-Type is text/n3\", function () {",
+									"  pm.response.to.have.header(\"Content-Type\");",
+									"  pm.response.to.be.header(\"Content-Type\", \"text/n3\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ORIGIN}}/schemas/edm/rdf/edm.n3",
+							"host": [
+								"{{ORIGIN}}"
+							],
+							"path": [
+								"schemas",
+								"edm",
+								"rdf",
+								"edm.n3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": ".nt",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Content-Type is application/n-triples\", function () {",
+									"  pm.response.to.have.header(\"Content-Type\");",
+									"  pm.response.to.be.header(\"Content-Type\", \"application/n-triples\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ORIGIN}}/schemas/edm/rdf/edm.nt",
+							"host": [
+								"{{ORIGIN}}"
+							],
+							"path": [
+								"schemas",
+								"edm",
+								"rdf",
+								"edm.nt"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": ".owl",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Content-Type is application/rdf+xml\", function () {",
+									"  pm.response.to.have.header(\"Content-Type\");",
+									"  pm.response.to.be.header(\"Content-Type\", \"application/rdf+xml\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ORIGIN}}/schemas/edm/rdf/edm.owl",
+							"host": [
+								"{{ORIGIN}}"
+							],
+							"path": [
+								"schemas",
+								"edm",
+								"rdf",
+								"edm.owl"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": ".ttl",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Content-Type is text/turtle\", function () {",
+									"  pm.response.to.have.header(\"Content-Type\");",
+									"  pm.response.to.be.header(\"Content-Type\", \"text/turtle\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ORIGIN}}/schemas/edm/rdf/edm.ttl",
+							"host": [
+								"{{ORIGIN}}"
+							],
+							"path": [
+								"schemas",
+								"edm",
+								"rdf",
+								"edm.ttl"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "EDM schema content negotiation",
+			"item": [
+				{
+					"name": "OWL",
+					"item": [
+						{
+							"name": "Accept: application/rdf+xml",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 303\", function () {",
+											"  pm.response.to.have.status(303);",
+											"});",
+											"",
+											"const origin = pm.variables.get(\"ORIGIN\");",
+											"",
+											"pm.test(`Location is ${origin}/schemas/edm/rdf/edm.owl`, function () {",
+											"  pm.response.to.have.header(\"Location\");",
+											"  pm.response.to.be.header(\"Location\", `${origin}/schemas/edm/rdf/edm.owl`);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/rdf+xml",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{ORIGIN}}/schemas/edm/ProvidedCHO",
+									"host": [
+										"{{ORIGIN}}"
+									],
+									"path": [
+										"schemas",
+										"edm",
+										"ProvidedCHO"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Accept: rdf/xml",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 303\", function () {",
+											"  pm.response.to.have.status(303);",
+											"});",
+											"",
+											"const origin = pm.variables.get(\"ORIGIN\");",
+											"",
+											"pm.test(`Location is ${origin}/schemas/edm/rdf/edm.owl`, function () {",
+											"  pm.response.to.have.header(\"Location\");",
+											"  pm.response.to.be.header(\"Location\", `${origin}/schemas/edm/rdf/edm.owl`);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "rdf/xml"
+									}
+								],
+								"url": {
+									"raw": "{{ORIGIN}}/schemas/edm/ProvidedCHO",
+									"host": [
+										"{{ORIGIN}}"
+									],
+									"path": [
+										"schemas",
+										"edm",
+										"ProvidedCHO"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "JSON-LD",
+					"item": [
+						{
+							"name": "Accept: application/ld+json",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 303\", function () {",
+											"  pm.response.to.have.status(303);",
+											"});",
+											"",
+											"const origin = pm.variables.get(\"ORIGIN\");",
+											"",
+											"pm.test(`Location is ${origin}/schemas/edm/rdf/edm.jsonld`, function () {",
+											"  pm.response.to.have.header(\"Location\");",
+											"  pm.response.to.be.header(\"Location\", `${origin}/schemas/edm/rdf/edm.jsonld`);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "application/ld+json"
+									}
+								],
+								"url": {
+									"raw": "{{ORIGIN}}/schemas/edm/ProvidedCHO",
+									"host": [
+										"{{ORIGIN}}"
+									],
+									"path": [
+										"schemas",
+										"edm",
+										"ProvidedCHO"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Accept: application/json",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 303\", function () {",
+											"  pm.response.to.have.status(303);",
+											"});",
+											"",
+											"const origin = pm.variables.get(\"ORIGIN\");",
+											"",
+											"pm.test(`Location is ${origin}/schemas/edm/rdf/edm.jsonld`, function () {",
+											"  pm.response.to.have.header(\"Location\");",
+											"  pm.response.to.be.header(\"Location\", `${origin}/schemas/edm/rdf/edm.jsonld`);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{ORIGIN}}/schemas/edm/ProvidedCHO",
+									"host": [
+										"{{ORIGIN}}"
+									],
+									"path": [
+										"schemas",
+										"edm",
+										"ProvidedCHO"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "TTL",
+					"item": [
+						{
+							"name": "Accept: text/turtle",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 303\", function () {",
+											"  pm.response.to.have.status(303);",
+											"});",
+											"",
+											"const origin = pm.variables.get(\"ORIGIN\");",
+											"",
+											"pm.test(`Location is ${origin}/schemas/edm/rdf/edm.ttl`, function () {",
+											"  pm.response.to.have.header(\"Location\");",
+											"  pm.response.to.be.header(\"Location\", `${origin}/schemas/edm/rdf/edm.ttl`);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "text/turtle"
+									}
+								],
+								"url": {
+									"raw": "{{ORIGIN}}/schemas/edm/ProvidedCHO",
+									"host": [
+										"{{ORIGIN}}"
+									],
+									"path": [
+										"schemas",
+										"edm",
+										"ProvidedCHO"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Accept: application/turtle",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 303\", function () {",
+											"  pm.response.to.have.status(303);",
+											"});",
+											"",
+											"const origin = pm.variables.get(\"ORIGIN\");",
+											"",
+											"pm.test(`Location is ${origin}/schemas/edm/rdf/edm.ttl`, function () {",
+											"  pm.response.to.have.header(\"Location\");",
+											"  pm.response.to.be.header(\"Location\", `${origin}/schemas/edm/rdf/edm.ttl`);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "application/turtle"
+									}
+								],
+								"url": {
+									"raw": "{{ORIGIN}}/schemas/edm/ProvidedCHO",
+									"host": [
+										"{{ORIGIN}}"
+									],
+									"path": [
+										"schemas",
+										"edm",
+										"ProvidedCHO"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Accept: application/x-turtle",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 303\", function () {",
+											"  pm.response.to.have.status(303);",
+											"});",
+											"",
+											"const origin = pm.variables.get(\"ORIGIN\");",
+											"",
+											"pm.test(`Location is ${origin}/schemas/edm/rdf/edm.ttl`, function () {",
+											"  pm.response.to.have.header(\"Location\");",
+											"  pm.response.to.be.header(\"Location\", `${origin}/schemas/edm/rdf/edm.ttl`);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "application/x-turtle"
+									}
+								],
+								"url": {
+									"raw": "{{ORIGIN}}/schemas/edm/ProvidedCHO",
+									"host": [
+										"{{ORIGIN}}"
+									],
+									"path": [
+										"schemas",
+										"edm",
+										"ProvidedCHO"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "N3",
+					"item": [
+						{
+							"name": "Accept: text/n3",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 303\", function () {",
+											"  pm.response.to.have.status(303);",
+											"});",
+											"",
+											"const origin = pm.variables.get(\"ORIGIN\");",
+											"",
+											"pm.test(`Location is ${origin}/schemas/edm/rdf/edm.n3`, function () {",
+											"  pm.response.to.have.header(\"Location\");",
+											"  pm.response.to.be.header(\"Location\", `${origin}/schemas/edm/rdf/edm.n3`);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "text/n3"
+									}
+								],
+								"url": {
+									"raw": "{{ORIGIN}}/schemas/edm/ProvidedCHO",
+									"host": [
+										"{{ORIGIN}}"
+									],
+									"path": [
+										"schemas",
+										"edm",
+										"ProvidedCHO"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Accept: text/rdf+n3",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 303\", function () {",
+											"  pm.response.to.have.status(303);",
+											"});",
+											"",
+											"const origin = pm.variables.get(\"ORIGIN\");",
+											"",
+											"pm.test(`Location is ${origin}/schemas/edm/rdf/edm.n3`, function () {",
+											"  pm.response.to.have.header(\"Location\");",
+											"  pm.response.to.be.header(\"Location\", `${origin}/schemas/edm/rdf/edm.n3`);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "text/rdf+n3"
+									}
+								],
+								"url": {
+									"raw": "{{ORIGIN}}/schemas/edm/ProvidedCHO",
+									"host": [
+										"{{ORIGIN}}"
+									],
+									"path": [
+										"schemas",
+										"edm",
+										"ProvidedCHO"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Accept: application/n3",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 303\", function () {",
+											"  pm.response.to.have.status(303);",
+											"});",
+											"",
+											"const origin = pm.variables.get(\"ORIGIN\");",
+											"",
+											"pm.test(`Location is ${origin}/schemas/edm/rdf/edm.n3`, function () {",
+											"  pm.response.to.have.header(\"Location\");",
+											"  pm.response.to.be.header(\"Location\", `${origin}/schemas/edm/rdf/edm.n3`);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "application/n3"
+									}
+								],
+								"url": {
+									"raw": "{{ORIGIN}}/schemas/edm/ProvidedCHO",
+									"host": [
+										"{{ORIGIN}}"
+									],
+									"path": [
+										"schemas",
+										"edm",
+										"ProvidedCHO"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "N-Triples",
+					"item": [
+						{
+							"name": "Accept: application/n-triples",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 303\", function () {",
+											"  pm.response.to.have.status(303);",
+											"});",
+											"",
+											"const origin = pm.variables.get(\"ORIGIN\");",
+											"",
+											"pm.test(`Location is ${origin}/schemas/edm/rdf/edm.nt`, function () {",
+											"  pm.response.to.have.header(\"Location\");",
+											"  pm.response.to.be.header(\"Location\", `${origin}/schemas/edm/rdf/edm.nt`);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "application/n-triples"
+									}
+								],
+								"url": {
+									"raw": "{{ORIGIN}}/schemas/edm/ProvidedCHO",
+									"host": [
+										"{{ORIGIN}}"
+									],
+									"path": [
+										"schemas",
+										"edm",
+										"ProvidedCHO"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Accept: application/ntriples",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 303\", function () {",
+											"  pm.response.to.have.status(303);",
+											"});",
+											"",
+											"const origin = pm.variables.get(\"ORIGIN\");",
+											"",
+											"pm.test(`Location is ${origin}/schemas/edm/rdf/edm.nt`, function () {",
+											"  pm.response.to.have.header(\"Location\");",
+											"  pm.response.to.be.header(\"Location\", `${origin}/schemas/edm/rdf/edm.nt`);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "application/ntriples"
+									}
+								],
+								"url": {
+									"raw": "{{ORIGIN}}/schemas/edm/ProvidedCHO",
+									"host": [
+										"{{ORIGIN}}"
+									],
+									"path": [
+										"schemas",
+										"edm",
+										"ProvidedCHO"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Accept: text/nt",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 303\", function () {",
+											"  pm.response.to.have.status(303);",
+											"});",
+											"",
+											"const origin = pm.variables.get(\"ORIGIN\");",
+											"",
+											"pm.test(`Location is ${origin}/schemas/edm/rdf/edm.nt`, function () {",
+											"  pm.response.to.have.header(\"Location\");",
+											"  pm.response.to.be.header(\"Location\", `${origin}/schemas/edm/rdf/edm.nt`);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "text/nt"
+									}
+								],
+								"url": {
+									"raw": "{{ORIGIN}}/schemas/edm/ProvidedCHO",
+									"host": [
+										"{{ORIGIN}}"
+									],
+									"path": [
+										"schemas",
+										"edm",
+										"ProvidedCHO"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "HTML documentation",
+					"item": [
+						{
+							"name": "Accept: text/html",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 303\", function () {",
+											"  pm.response.to.have.status(303);",
+											"});",
+											"",
+											"const documentation = \"https://pro.europeana.eu/edm-documentation\";",
+											"",
+											"pm.test(`Location is ${documentation}`, function () {",
+											"  pm.response.to.have.header(\"Location\");",
+											"  pm.response.to.be.header(\"Location\", documentation);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "text/html"
+									}
+								],
+								"url": {
+									"raw": "{{ORIGIN}}/schemas/edm/ProvidedCHO",
+									"host": [
+										"{{ORIGIN}}"
+									],
+									"path": [
+										"schemas",
+										"edm",
+										"ProvidedCHO"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Accept: */*",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 303\", function () {",
+											"  pm.response.to.have.status(303);",
+											"});",
+											"",
+											"const documentation = \"https://pro.europeana.eu/edm-documentation\";",
+											"",
+											"pm.test(`Location is ${documentation}`, function () {",
+											"  pm.response.to.have.header(\"Location\");",
+											"  pm.response.to.be.header(\"Location\", documentation);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ORIGIN}}/schemas/edm/ProvidedCHO",
+									"host": [
+										"{{ORIGIN}}"
+									],
+									"path": [
+										"schemas",
+										"edm",
+										"ProvidedCHO"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Resolve item URIs",
+			"item": [
+				{
+					"name": "/api/v1/record/[DATASET]/[ITEM].html",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 301\", function () {",
+									"  pm.response.to.have.status(301);",
+									"});",
+									"",
+									"const origin = pm.variables.get(\"ORIGIN\");",
+									"const location = `${origin}/item/123/abc`;",
+									"",
+									"pm.test(`Location is ${location}`, function () {",
+									"  pm.response.to.have.header(\"Location\");",
+									"  pm.response.to.be.header(\"Location\", location);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ORIGIN}}/api/v1/record/123/abc.html",
+							"host": [
+								"{{ORIGIN}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"record",
+								"123",
+								"abc.html"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/resolve/record/[DATASET]/[ITEM]",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 301\", function () {",
+									"  pm.response.to.have.status(301);",
+									"});",
+									"",
+									"const origin = pm.variables.get(\"ORIGIN\");",
+									"const location = `${origin}/item/123/abc`;",
+									"",
+									"pm.test(`Location is ${location}`, function () {",
+									"  pm.response.to.have.header(\"Location\");",
+									"  pm.response.to.be.header(\"Location\", location);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ORIGIN}}/resolve/record/123/abc",
+							"host": [
+								"{{ORIGIN}}"
+							],
+							"path": [
+								"resolve",
+								"record",
+								"123",
+								"abc"
+							]
+						},
+						"description": "Older record notation"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Static files",
+			"item": [
+				{
+					"name": "robots.txt",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(`Content-Type is text/plain`, function () {",
+									"  pm.response.to.have.header(\"Content-Type\");",
+									"  pm.response.to.be.header(\"Content-Type\", \"text/plain\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ORIGIN}}/robots.txt",
+							"host": [
+								"{{ORIGIN}}"
+							],
+							"path": [
+								"robots.txt"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "APIs",
+			"item": [
+				{
+					"name": "Annotation API",
+					"item": [
+						{
+							"name": "/api/annotations reverse proxied",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"  pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Requests are reverse proxied\", function () {",
+											"  const jsonData = pm.response.json();",
+											"  pm.expect(jsonData['@context']).to.eql(\"http://www.w3.org/ns/anno.jsonld\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ORIGIN}}/api/annotations/search?query=*:*&wskey=apidemo&pageSize=0",
+									"host": [
+										"{{ORIGIN}}"
+									],
+									"path": [
+										"api",
+										"annotations",
+										"search"
+									],
+									"query": [
+										{
+											"key": "query",
+											"value": "*:*"
+										},
+										{
+											"key": "wskey",
+											"value": "apidemo"
+										},
+										{
+											"key": "pageSize",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Entity API",
+					"item": [
+						{
+							"name": "/api/entities reverse proxied",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"  pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Requests are reverse proxied\", function () {",
+											"  const jsonData = pm.response.json();",
+											"  pm.expect(jsonData['@context']).to.eql(\"http://www.europeana.eu/schemas/context/entity.jsonld\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ORIGIN}}/api/entities/search?query=*:*&wskey=apidemo&pageSize=0",
+									"host": [
+										"{{ORIGIN}}"
+									],
+									"path": [
+										"api",
+										"entities",
+										"search"
+									],
+									"query": [
+										{
+											"key": "query",
+											"value": "*:*"
+										},
+										{
+											"key": "wskey",
+											"value": "apidemo"
+										},
+										{
+											"key": "pageSize",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Fulltext API",
+					"item": [
+						{
+							"name": "/api/fulltext reverse proxied",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"  pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Requests are reverse proxied\", function () {",
+											"  pm.response.to.have.header(\"Content-Type\");",
+											"  pm.response.to.be.header(\"Content-Type\", \"application/ld+json; profile=\\\"http://iiif.io/api/presentation/2/context.json\\\";charset=UTF-8\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ORIGIN}}/api/fulltext/9200396/BibliographicResource_3000118436165/annopage/1",
+									"host": [
+										"{{ORIGIN}}"
+									],
+									"path": [
+										"api",
+										"fulltext",
+										"9200396",
+										"BibliographicResource_3000118436165",
+										"annopage",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Sitemap API",
+					"item": [
+						{
+							"name": "/sitemap-record-index.html reverse proxied",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"  pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Requests are reverse proxied\", function () {",
+											"  pm.response.to.have.header(\"Content-Type\");",
+											"  pm.response.to.be.header(\"Content-Type\", \"text/xml;charset=UTF-8\");",
+											"});",
+											"",
+											"pm.test(\"Body matches string\", function () {",
+											"  pm.expect(pm.response.text()).to.include(\"https://www.europeana.eu/sitemap-record.xml\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ORIGIN}}/sitemap-record-index.xml",
+									"host": [
+										"{{ORIGIN}}"
+									],
+									"path": [
+										"sitemap-record-index.xml"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/sitemap-record.html reverse proxied",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"  pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Requests are reverse proxied\", function () {",
+											"  pm.response.to.have.header(\"Content-Type\");",
+											"  pm.response.to.be.header(\"Content-Type\", \"text/xml;charset=UTF-8\");",
+											"});",
+											"",
+											"pm.test(\"Body matches string\", function () {",
+											"  pm.expect(pm.response.text()).to.include(\"https://www.europeana.eu/en/item\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ORIGIN}}/sitemap-record.xml?from=1&to=45000",
+									"host": [
+										"{{ORIGIN}}"
+									],
+									"path": [
+										"sitemap-record.xml"
+									],
+									"query": [
+										{
+											"key": "from",
+											"value": "1"
+										},
+										{
+											"key": "to",
+											"value": "45000"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/sitemap-entity-index.html reverse proxied Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"  pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Requests are reverse proxied\", function () {",
+											"  pm.response.to.have.header(\"Content-Type\");",
+											"  pm.response.to.be.header(\"Content-Type\", \"text/xml;charset=UTF-8\");",
+											"});",
+											"",
+											"pm.test(\"Body matches string\", function () {",
+											"  pm.expect(pm.response.text()).to.include(\"https://www.europeana.eu/sitemap-entity.xml\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ORIGIN}}/sitemap-entity-index.xml",
+									"host": [
+										"{{ORIGIN}}"
+									],
+									"path": [
+										"sitemap-entity-index.xml"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/sitemap-entity.html reverse proxied",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"  pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Requests are reverse proxied\", function () {",
+											"  pm.response.to.have.header(\"Content-Type\");",
+											"  pm.response.to.be.header(\"Content-Type\", \"text/xml;charset=UTF-8\");",
+											"});",
+											"",
+											"pm.test(\"Body matches string\", function () {",
+											"  pm.expect(pm.response.text()).to.include(\"https://www.europeana.eu/en/collections\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ORIGIN}}/sitemap-entity.xml?from=1&to=15000",
+									"host": [
+										"{{ORIGIN}}"
+									],
+									"path": [
+										"sitemap-entity.xml"
+									],
+									"query": [
+										{
+											"key": "from",
+											"value": "1"
+										},
+										{
+											"key": "to",
+											"value": "15000"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Record API",
+					"item": [
+						{
+							"name": "Redirect http:// to https://",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 301\", function () {",
+											"  pm.response.to.have.status(301);",
+											"});",
+											"",
+											"const location = pm.request.url.toString().replace('http://', 'https://');",
+											"",
+											"pm.test(`Location is ${location}`, function () {",
+											"  pm.response.to.have.header(\"Location\");",
+											"  pm.response.to.be.header(\"Location\", location);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-Forwarded-Proto",
+										"value": "http",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{ORIGIN}}/api/v2/search.json",
+									"host": [
+										"{{ORIGIN}}"
+									],
+									"path": [
+										"api",
+										"v2",
+										"search.json"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api reverse proxied",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"  pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Requests are reverse proxied\", function () {",
+											"  const jsonData = pm.response.json();",
+											"  pm.expect(jsonData.info.title).to.eql(\"Europeana Search & Record API\");",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ORIGIN}}/api/api-docs",
+									"host": [
+										"{{ORIGIN}}"
+									],
+									"path": [
+										"api",
+										"api-docs"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}

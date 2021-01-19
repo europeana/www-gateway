@@ -1,0 +1,12 @@
+version: "3"
+services:
+  www:
+    image: europeana/www-gateway-nginx
+    build:
+      context: ..
+  test:
+    image: europeana/www-gateway-newman
+    build:
+      context: .
+    depends_on:
+      - www
