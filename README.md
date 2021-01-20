@@ -1,5 +1,7 @@
 # Europeana WWW gateway
 
+![test](https://github.com/europeana/www-gateway/workflows/test/badge.svg)
+
 HTTP gateway for www.europeana.eu using NGINX.
 
 ## Tests
