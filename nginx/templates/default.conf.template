@@ -1,6 +1,5 @@
 server {
-  listen       80;
-  listen  [::]:80;
+  listen       ${PORT};
   server_name  localhost;
 
   resolver ${RESOLVER};
@@ -44,31 +43,31 @@ server {
 
   # Reverse proxy /api/annotations to Annotation API
   location ~ ^/api/annotations/(.*) {
-    proxy_pass ${ANNOTATION_API_PROTO}://${ANNOTATION_API_HOST}/annotation/$1$is_args$args;
+    proxy_pass ${ANNOTATION_API_URL}/annotation/$1$is_args$args;
     proxy_set_header Host ${ANNOTATION_API_HOST};
   }
 
   # Reverse proxy /api/entities to Entity API
   location ~ ^/api/entities/(.*) {
-    proxy_pass ${ENTITY_API_PROTO}://${ENTITY_API_HOST}/entity/$1$is_args$args;
+    proxy_pass ${ENTITY_API_URL}/entity/$1$is_args$args;
     proxy_set_header Host ${ENTITY_API_HOST};
   }
 
   # Reverse proxy /api/fulltext to Fulltext API
   location ~ ^/api/fulltext/(.*) {
-    proxy_pass ${FULLTEXT_API_PROTO}://${FULLTEXT_API_HOST}/presentation/$1$is_args$args;
+    proxy_pass ${FULLTEXT_API_URL}/presentation/$1$is_args$args;
     proxy_set_header Host ${FULLTEXT_API_HOST};
   }
 
   # Reverse proxy /sitemap-record* and /sitemap-entity* to Sitemap API
   location ~ ^(/sitemap-(record|entity).+) {
-    proxy_pass ${SITEMAP_API_PROTO}://${SITEMAP_API_HOST}/$2$1$is_args$args;
+    proxy_pass ${SITEMAP_API_URL}/$2$1$is_args$args;
     proxy_set_header Host ${SITEMAP_API_HOST};
   }
 
   # Reverse proxy /api to Record API
   location ~ ^/api {
-    proxy_pass ${RECORD_API_PROTO}://${RECORD_API_HOST};
+    proxy_pass ${RECORD_API_URL};
     proxy_set_header Host ${RECORD_API_HOST};
   }
 
@@ -80,13 +79,22 @@ server {
 
   # Reverse proxy everything else to the Portal
   location @portal {
-    proxy_pass ${PORTAL_PROTO}://${PORTAL_HOST};
+    # Forces use of resolver. Essential for regularly changing DNS records, such
+    # as those for container-to-container networking.
+    # See: https://www.nginx.com/blog/dns-service-discovery-nginx-plus/
+    set $url ${PORTAL_URL};
+    proxy_pass $url;
     proxy_set_header Host ${PORTAL_HOST};
+    # TODO: handle case where X-Forwarded-Proto is not present, using $scheme instead
+    proxy_redirect / $http_x_forwarded_proto://$host/;
   }
 
   # TODO:
+  # * CORS
+  # * deploy/ dir for CF w/ Jenkins Pipeline
   # * Disallow robots if env var DISALLOW_ROBOTS is set to 1
   # * Old locations for some pages we need to be backwards compatible with
   # * Obsolete and invalid pages
   # * Old style sitemap requests - STILL NEEDED?
+  # * Thumbnail API
 }

@@ -1,27 +1,20 @@
 FROM nginx:mainline
 
-ENV ANNOTATION_API_HOST=annotations.europeana.eu
-ENV ANNOTATION_API_PROTO=https
-
-ENV ENTITY_API_HOST=entity-api.europeana.eu
-ENV ENTITY_API_PROTO=https
-
-ENV FULLTEXT_API_HOST=fulltext.eanadev.org
-ENV FULLTEXT_API_PROTO=https
-
-ENV PORTAL_HOST=portaljs.europeana.eu
-ENV PORTAL_PROTO=https
-
-ENV RECORD_API_HOST=search-api.europeana.eu
-ENV RECORD_API_PROTO=https
-
-ENV SITEMAP_API_HOST=sitemap.eanadev.org
-ENV SITEMAP_API_PROTO=https
-
-ENV THUMBNAIL_API_HOST=thumbnail.eanadev.org
-ENV THUMBNAIL_API_PROTO=https
-
-ENV RESOLVER=
+ENV PORT=80 \
+    RESOLVER= \
+    ANNOTATION_API_URL=https://annotations.europeana.eu \
+    ANNOTATION_API_HOST=annotations.europeana.eu \
+    ENTITY_API_URL=https://entity-api.europeana.eu \
+    ENTITY_API_HOST=entity-api.europeana.eu \
+    FULLTEXT_API_URL=https://fulltext.eanadev.org \
+    FULLTEXT_API_HOST=fulltext.eanadev.org \
+    PORTAL_URL=https://portaljs.europeana.eu \
+    PORTAL_HOST=portaljs.europeana.eu \
+    RECORD_API_URL=https://search-api.europeana.eu \
+    RECORD_API_HOST=search-api.europeana.eu \
+    SITEMAP_API_URL=https://sitemap.eanadev.org \
+    SITEMAP_API_HOST=sitemap.eanadev.org \
+    THUMBNAIL_API_URL=https://thumbnail.eanadev.org
 
 RUN mv /docker-entrypoint.sh /docker-entrypoint-nginx.sh && \
     rm -r /usr/share/nginx/html
