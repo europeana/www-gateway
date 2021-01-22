@@ -1669,6 +1669,119 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Legacy URLs",
+			"item": [
+				{
+					"name": "301 Moved Permanently",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 301\", function () {",
+									"  pm.response.to.have.status(301);",
+									"});",
+									"",
+									"const location = \"https://pro.europeana.eu/jobs\";",
+									"",
+									"pm.test(`Location is ${location}`, function () {",
+									"  pm.response.to.have.header(\"Location\");",
+									"  pm.response.to.be.header(\"Location\", location);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ORIGIN}}/about/jobs",
+							"host": [
+								"{{ORIGIN}}"
+							],
+							"path": [
+								"about",
+								"jobs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "302 Found",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 302\", function () {",
+									"  pm.response.to.have.status(302);",
+									"});",
+									"",
+									"const origin = pm.variables.get('ORIGIN');",
+									"const location = `${origin}/rights/orphan-work-eu`;",
+									"",
+									"pm.test(`Location is ${location}`, function () {",
+									"  pm.response.to.have.header(\"Location\");",
+									"  pm.response.to.be.header(\"Location\", location);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ORIGIN}}/rights/orphan-work-eu.html",
+							"host": [
+								"{{ORIGIN}}"
+							],
+							"path": [
+								"rights",
+								"orphan-work-eu.html"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "410 Gone",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 410\", function () {",
+									"  pm.response.to.have.status(410);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ORIGIN}}/portal/rec.html",
+							"host": [
+								"{{ORIGIN}}"
+							],
+							"path": [
+								"portal",
+								"rec.html"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }

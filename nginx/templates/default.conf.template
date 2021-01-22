@@ -24,6 +24,73 @@ server {
     return 303 https://pro.europeana.eu/edm-documentation;
   }
 
+  # 301 Moved Permanently
+  location = /about/jobs { return 301 https://pro.europeana.eu/jobs; }
+  location = /api/image { return 301 /api/v2/thumbnail-by-url.json; }
+  location = /index.php { return 301 /; }
+  location = /portal/accessibility.html { return 301 /portal/rights/accessibility.html; }
+  location = /portal/api-api1-api2.html { return 301 https://pro.europeana.eu/what-we-do/creative-industries; }
+  location = /portal/api-changes.html { return 301 https://pro.europeana.eu/what-we-do/creative-industries; }
+  location = /portal/api-common-fields.html { return 301 https://pro.europeana.eu/what-we-do/creative-industries; }
+  location = /portal/api-data-structure.html { return 301 https://pro.europeana.eu/what-we-do/creative-industries; }
+  location = /portal/api-documentation.html { return 301 https://pro.europeana.eu/what-we-do/creative-industries; }
+  location = /portal/api-europeana-repository.html { return 301 https://pro.europeana.eu/what-we-do/creative-industries; }
+  location = /portal/api-fields.html { return 301 https://pro.europeana.eu/what-we-do/creative-industries; }
+  location = /portal/api-introduction.html { return 301 https://pro.europeana.eu/what-we-do/creative-industries; }
+  location = /portal/api-methods.html { return 301 https://pro.europeana.eu/what-we-do/creative-industries; }
+  location = /portal/api-opensearch-rss.html { return 301 https://pro.europeana.eu/what-we-do/creative-industries; }
+  location = /portal/api-profile-json.html { return 301 https://pro.europeana.eu/what-we-do/creative-industries; }
+  location = /portal/api-query-syntax.html { return 301 https://pro.europeana.eu/what-we-do/creative-industries; }
+  location = /portal/api-record-json.html { return 301 https://pro.europeana.eu/what-we-do/creative-industries; }
+  location = /portal/api-sample-code-and-libraries.html { return 301 https://pro.europeana.eu/what-we-do/creative-industries; }
+  location = /portal/api-saveditem-json.html { return 301 https://pro.europeana.eu/what-we-do/creative-industries; }
+  location = /portal/api-savedsearch-json.html { return 301 https://pro.europeana.eu/what-we-do/creative-industries; }
+  location = /portal/api-search-json.html { return 301 https://pro.europeana.eu/what-we-do/creative-industries; }
+  location = /portal/api-suggestions-json.html { return 301 https://pro.europeana.eu/what-we-do/creative-industries; }
+  location = /portal/api-tag-json.html { return 301 https://pro.europeana.eu/what-we-do/creative-industries; }
+  location = /portal/api/console.html { return 301 https://pro.europeana.eu/what-we-do/creative-industries; }
+  location = /portal/data-usage-guide.html { return 301 /portal/rights/metadata.html; }
+  location = /portal/languagepolicy.html { return 301 /portal/rights/privacy.html; }
+  location = /portal/pd-usage-guide.html { return 301 /portal/rights/pd-usage-guide.html; }
+  location = /portal/privacy.html { return 301 /portal/rights/privacy.html; }
+  location = /portal/reading_europe.html { return 301 http://www.theeuropeanlibrary.org/exhibition-reading-europe/; }
+  location = /portal/rights/api-terms-of-use.html { return 301 /portal/rights/api.html; }
+  location = /portal/rights/languagepolicy.html { return 301 /portal/rights/language.html; }
+  location = /portal/rights/linked-data-sources.html { return 301 /portal/rights/data-sources.html; }
+  location = /portal/rights/metadata-usage-guidelines.html { return 301 /portal/rights/metadata.html; }
+  location = /portal/rights/orphan-work-eu/ { return 301 /portal/rights/orphan-work-eu.html; }
+  location = /portal/rights/out-of-copyright-non-commercial/ { return 301 /portal/rights/out-of-copyright-non-commercial.html; }
+  location = /portal/rights/pd-usage-guide.html { return 301 /portal/rights/public-domain.html; }
+  location = /portal/rights/rr-f/ { return 301 /portal/rights/rr-f.html; }
+  location = /portal/rights/rr-p/ { return 301 /portal/rights/rr-p.html; }
+  location = /portal/rights/rr-r/ { return 301 /portal/rights/rr-r.html; }
+  location = /portal/rights/terms-and-policies.html { return 301 /portal/rights.html; }
+  location = /portal/rights/terms-of-use.html { return 301 /portal/rights/terms.html; }
+  location = /portal/rights/unknown/ { return 301 /portal/rights/unknown.html; }
+  location = /portal/rr-f.html { return 301 /portal/rights/rr-f.html; }
+  location = /portal/termsofservice.html { return 301 /portal/rights/terms.html; }
+  location = /rights/rr-f/ { return 301 /portal/rights/rr-f.html; }
+  location = /rights/rr-p/ { return 301 /portal/rights/rr-p.html; }
+  location = /rights/rr-r/ { return 301 /portal/rights/rr-r.html; }
+  location = /rights/termsofservice.html { return 301 /portal/rights/terms-of-use.html; }
+  location = /rights/termsofuse { return 301 /portal/rights/terms-of-use.html; }
+  location = /rights/unknown/ { return 301 /portal/rights/unknown.html; }
+
+  # 302 Found
+  location = /rights/metadata-usage-guidelines { return 302 /rights/usage-guidelines-for-metadata; }
+  location = /rights/pd-usage-guide { return 302 /rights/public-domain-usage-guidelines; }
+  location ~ ^/rights/([\w-]*).html { return 302 /rights/$1; }
+  location ~ ^/schemas/? { return 302 https://pro.europeana.eu/page/edm-documentation; }
+
+  # 410 Gone
+  location = /portal/communities_artnouveau.html { return 410; }
+  location = /portal/communities_biodiversity.html { return 410; }
+  location = /portal/communities_maps.html { return 410; }
+  location = /portal/communities_medieval.html { return 410; }
+  location = /portal/communities.html { return 410; }
+  location = /portal/kindle_competition.html { return 410; }
+  location = /portal/rec.html { return 410; }
+
   # Record API v1 item redirection
   location ~ ^/api/v1/record/(\w+)/(\w+).html$ {
     return 301 /item/$1/$2;
@@ -103,6 +170,4 @@ server {
   # TODO:
   # * deploy/ dir for CF w/ Jenkins Pipeline
   # * Disallow robots if env var DISALLOW_ROBOTS is set to 1
-  # * Old locations for some pages we need to be backwards compatible with
-  # * Obsolete and invalid pages
 }
