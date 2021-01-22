@@ -80,7 +80,7 @@ server {
   location = /rights/metadata-usage-guidelines { return 302 /rights/usage-guidelines-for-metadata; }
   location = /rights/pd-usage-guide { return 302 /rights/public-domain-usage-guidelines; }
   location ~ ^/rights/([\w-]*).html { return 302 /rights/$1; }
-  location ~ ^/schemas/? { return 302 https://pro.europeana.eu/page/edm-documentation; }
+  location ~ ^/schemas/?$ { return 302 https://pro.europeana.eu/page/edm-documentation; }
 
   # 410 Gone
   location = /portal/communities_artnouveau.html { return 410; }
