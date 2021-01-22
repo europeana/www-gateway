@@ -97,4 +97,5 @@ server {
   # * Obsolete and invalid pages
   # * Old style sitemap requests - STILL NEEDED?
   # * Thumbnail API
+  # * Other static files
 }
