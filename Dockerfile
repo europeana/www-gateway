@@ -2,6 +2,8 @@ FROM nginx:mainline
 
 ENV PORT=80 \
     RESOLVER= \
+    DISALLOW_ROBOTS=false \
+    PORT_IN_REDIRECT=on \
     ANNOTATION_API_URL=https://annotations.europeana.eu \
     ANNOTATION_API_HOST=annotations.europeana.eu \
     ENTITY_API_URL=https://entity-api.europeana.eu \

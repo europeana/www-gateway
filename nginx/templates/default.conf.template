@@ -4,6 +4,15 @@ server {
 
   resolver ${RESOLVER};
 
+  # Set port_in_redirect from env var PORT_IN_REDIRECT
+  port_in_redirect "${PORT_IN_REDIRECT}";
+
+  # Prevent crawling by bots if env var DISALLOW_ROBOTS=true
+  set $disallow_robots "${DISALLOW_ROBOTS}";
+  if ($disallow_robots = "true") {
+    rewrite ^/robots.txt$ /disallow-robots.txt last;
+  }
+
   # EDM schema content negotiation
   location ~ ^/schemas/edm/(\w+)?$ {
     if ($http_accept ~* "application/rdf\+xml|rdf/xml") {
@@ -110,42 +119,49 @@ server {
 
   # Annotation API
   location ~ ^/api/annotations/(.*) {
-    proxy_pass ${ANNOTATION_API_URL}/annotation/$1$is_args$args;
+    set $url ${ANNOTATION_API_URL};
+    proxy_pass $url/annotation/$1$is_args$args;
     proxy_set_header Host ${ANNOTATION_API_HOST};
   }
 
   # Entity API
   location ~ ^/api/entities/(.*) {
-    proxy_pass ${ENTITY_API_URL}/entity/$1$is_args$args;
+    set $url ${ENTITY_API_URL};
+    proxy_pass $url/entity/$1$is_args$args;
     proxy_set_header Host ${ENTITY_API_HOST};
   }
 
   # Fulltext API
   location ~ ^/api/fulltext/(.*) {
-    proxy_pass ${FULLTEXT_API_URL}/presentation/$1$is_args$args;
+    set $url ${FULLTEXT_API_URL};
+    proxy_pass $url/presentation/$1$is_args$args;
     proxy_set_header Host ${FULLTEXT_API_HOST};
   }
 
   # Sitemap API
   location ~ ^(/sitemap-(record|entity).+) {
-    proxy_pass ${SITEMAP_API_URL}/$2$1$is_args$args;
+    set $url ${SITEMAP_API_URL};
+    proxy_pass $url/$2$1$is_args$args;
     proxy_set_header Host ${SITEMAP_API_HOST};
   }
   # Legacy URLs, kept until all search engines use newer (see previous location)
   location ~ ^/portal(/europeana-sitemap(-index)?-hashed\.xml)$ {
-    proxy_pass ${SITEMAP_API_URL}/sitemap/$1$is_args$args;
+    set $url ${SITEMAP_API_URL};
+    proxy_pass $url/sitemap/$1$is_args$args;
     proxy_set_header Host ${SITEMAP_API_HOST};
   }
 
   # Thumbnail API, v2 only
   location = /api/v2/thumbnail-by-url.json {
-    proxy_pass ${THUMBNAIL_API_URL}/api/v2/thumbnail-by-url.json;
+    set $url ${THUMBNAIL_API_URL};
+    proxy_pass $url;
     proxy_set_header Host ${THUMBNAIL_API_HOST};
   }
 
   # Record API
   location ~ ^/api {
-    proxy_pass ${RECORD_API_URL};
+    set $url ${RECORD_API_URL};
+    proxy_pass $url;
     proxy_set_header Host ${RECORD_API_HOST};
   }
 
@@ -164,10 +180,6 @@ server {
     proxy_pass $url;
     proxy_set_header Host ${PORTAL_HOST};
     # TODO: handle case where X-Forwarded-Proto is not present, using $scheme instead
-    proxy_redirect / $http_x_forwarded_proto://$host/;
+    # proxy_redirect / $http_x_forwarded_proto://$host/;
   }
-
-  # TODO:
-  # * deploy/ dir for CF w/ Jenkins Pipeline
-  # * Disallow robots if env var DISALLOW_ROBOTS is set to 1
 }
