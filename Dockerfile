@@ -14,7 +14,8 @@ ENV PORT=80 \
     RECORD_API_HOST=search-api.europeana.eu \
     SITEMAP_API_URL=https://sitemap.eanadev.org \
     SITEMAP_API_HOST=sitemap.eanadev.org \
-    THUMBNAIL_API_URL=https://thumbnail.eanadev.org
+    THUMBNAIL_API_URL=https://thumbnail.eanadev.org \
+    THUMBNAIL_API_HOST=thumbnail.eanadev.org
 
 RUN mv /docker-entrypoint.sh /docker-entrypoint-nginx.sh && \
     rm -r /usr/share/nginx/html

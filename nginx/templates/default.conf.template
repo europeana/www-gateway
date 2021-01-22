@@ -41,31 +41,37 @@ server {
     }
   }
 
-  # Reverse proxy /api/annotations to Annotation API
+  # Annotation API
   location ~ ^/api/annotations/(.*) {
     proxy_pass ${ANNOTATION_API_URL}/annotation/$1$is_args$args;
     proxy_set_header Host ${ANNOTATION_API_HOST};
   }
 
-  # Reverse proxy /api/entities to Entity API
+  # Entity API
   location ~ ^/api/entities/(.*) {
     proxy_pass ${ENTITY_API_URL}/entity/$1$is_args$args;
     proxy_set_header Host ${ENTITY_API_HOST};
   }
 
-  # Reverse proxy /api/fulltext to Fulltext API
+  # Fulltext API
   location ~ ^/api/fulltext/(.*) {
     proxy_pass ${FULLTEXT_API_URL}/presentation/$1$is_args$args;
     proxy_set_header Host ${FULLTEXT_API_HOST};
   }
 
-  # Reverse proxy /sitemap-record* and /sitemap-entity* to Sitemap API
+  # Sitemap API
   location ~ ^(/sitemap-(record|entity).+) {
     proxy_pass ${SITEMAP_API_URL}/$2$1$is_args$args;
     proxy_set_header Host ${SITEMAP_API_HOST};
   }
 
-  # Reverse proxy /api to Record API
+  # Thumbnail API, v2 only
+  location = /api/v2/thumbnail-by-url.json {
+    proxy_pass ${THUMBNAIL_API_URL}/api/v2/thumbnail-by-url.json;
+    proxy_set_header Host ${THUMBNAIL_API_HOST};
+  }
+
+  # Record API
   location ~ ^/api {
     proxy_pass ${RECORD_API_URL};
     proxy_set_header Host ${RECORD_API_HOST};
@@ -96,6 +102,5 @@ server {
   # * Old locations for some pages we need to be backwards compatible with
   # * Obsolete and invalid pages
   # * Old style sitemap requests - STILL NEEDED?
-  # * Thumbnail API
   # * Other static files
 }
