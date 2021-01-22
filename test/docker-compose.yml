@@ -1,3 +1,4 @@
+# TODO: mock APIs and Portal for tests
 version: "3"
 services:
   www:

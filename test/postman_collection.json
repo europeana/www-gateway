@@ -1013,353 +1013,498 @@
 			]
 		},
 		{
-			"name": "APIs",
+			"name": "Reverse proxying",
 			"item": [
 				{
-					"name": "Annotation API",
+					"name": "APIs",
 					"item": [
 						{
-							"name": "/api/annotations reverse proxied",
-							"event": [
+							"name": "Annotation API",
+							"item": [
 								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {",
-											"  pm.response.to.have.status(200);",
-											"});",
-											"",
-											"pm.test(\"Requests are reverse proxied\", function () {",
-											"  const jsonData = pm.response.json();",
-											"  pm.expect(jsonData['@context']).to.eql(\"http://www.w3.org/ns/anno.jsonld\");",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{ORIGIN}}/api/annotations/search?query=*:*&wskey=apidemo&pageSize=0",
-									"host": [
-										"{{ORIGIN}}"
-									],
-									"path": [
-										"api",
-										"annotations",
-										"search"
-									],
-									"query": [
+									"name": "/api/annotations",
+									"event": [
 										{
-											"key": "query",
-											"value": "*:*"
-										},
-										{
-											"key": "wskey",
-											"value": "apidemo"
-										},
-										{
-											"key": "pageSize",
-											"value": "0"
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"  pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Requests are reverse proxied\", function () {",
+													"  const jsonData = pm.response.json();",
+													"  pm.expect(jsonData['@context']).to.eql(\"http://www.w3.org/ns/anno.jsonld\");",
+													"});"
+												],
+												"type": "text/javascript"
+											}
 										}
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Entity API",
-					"item": [
-						{
-							"name": "/api/entities reverse proxied",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {",
-											"  pm.response.to.have.status(200);",
-											"});",
-											"",
-											"pm.test(\"Requests are reverse proxied\", function () {",
-											"  const jsonData = pm.response.json();",
-											"  pm.expect(jsonData['@context']).to.eql(\"http://www.europeana.eu/schemas/context/entity.jsonld\");",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{ORIGIN}}/api/entities/search?query=*:*&wskey=apidemo&pageSize=0",
-									"host": [
-										"{{ORIGIN}}"
 									],
-									"path": [
-										"api",
-										"entities",
-										"search"
-									],
-									"query": [
-										{
-											"key": "query",
-											"value": "*:*"
-										},
-										{
-											"key": "wskey",
-											"value": "apidemo"
-										},
-										{
-											"key": "pageSize",
-											"value": "0"
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{ORIGIN}}/api/annotations/search?query=*:*&wskey=apidemo&pageSize=0",
+											"host": [
+												"{{ORIGIN}}"
+											],
+											"path": [
+												"api",
+												"annotations",
+												"search"
+											],
+											"query": [
+												{
+													"key": "query",
+													"value": "*:*"
+												},
+												{
+													"key": "wskey",
+													"value": "apidemo"
+												},
+												{
+													"key": "pageSize",
+													"value": "0"
+												}
+											]
 										}
-									]
+									},
+									"response": []
 								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Fulltext API",
-					"item": [
-						{
-							"name": "/api/fulltext reverse proxied",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {",
-											"  pm.response.to.have.status(200);",
-											"});",
-											"",
-											"pm.test(\"Requests are reverse proxied\", function () {",
-											"  pm.response.to.have.header(\"Content-Type\");",
-											"  pm.response.to.be.header(\"Content-Type\", \"application/ld+json; profile=\\\"http://iiif.io/api/presentation/2/context.json\\\";charset=UTF-8\");",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{ORIGIN}}/api/fulltext/9200396/BibliographicResource_3000118436165/annopage/1",
-									"host": [
-										"{{ORIGIN}}"
-									],
-									"path": [
-										"api",
-										"fulltext",
-										"9200396",
-										"BibliographicResource_3000118436165",
-										"annopage",
-										"1"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Thumbnail API",
-					"item": [
-						{
-							"name": "/api/v2/thumbnail-by-url.json reverse proxied",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {",
-											"  pm.response.to.have.status(200);",
-											"});",
-											"",
-											"pm.test(\"Requests are reverse proxied\", function () {",
-											"  pm.response.to.have.header(\"Content-Type\");",
-											"  pm.response.to.be.header(\"Content-Type\", \"image/jpeg\");",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{ORIGIN}}/api/v2/thumbnail-by-url.json?size=w400&type=IMAGE&uri=https%3A%2F%2Fwww.rijksmuseum.nl%2Fassetimage2.jsp%3Fid%3DSK-A-2344",
-									"host": [
-										"{{ORIGIN}}"
-									],
-									"path": [
-										"api",
-										"v2",
-										"thumbnail-by-url.json"
-									],
-									"query": [
-										{
-											"key": "size",
-											"value": "w400"
-										},
-										{
-											"key": "type",
-											"value": "IMAGE"
-										},
-										{
-											"key": "uri",
-											"value": "https%3A%2F%2Fwww.rijksmuseum.nl%2Fassetimage2.jsp%3Fid%3DSK-A-2344"
-										}
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Sitemap API",
-					"item": [
-						{
-							"name": "/sitemap-record-index.html reverse proxied",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {",
-											"  pm.response.to.have.status(200);",
-											"});",
-											"",
-											"pm.test(\"Requests are reverse proxied\", function () {",
-											"  pm.response.to.have.header(\"Content-Type\");",
-											"  pm.response.to.be.header(\"Content-Type\", \"text/xml;charset=UTF-8\");",
-											"});",
-											"",
-											"pm.test(\"Body matches string\", function () {",
-											"  pm.expect(pm.response.text()).to.include(\"https://www.europeana.eu/sitemap-record.xml\");",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{ORIGIN}}/sitemap-record-index.xml",
-									"host": [
-										"{{ORIGIN}}"
-									],
-									"path": [
-										"sitemap-record-index.xml"
-									]
-								}
-							},
-							"response": []
+							]
 						},
 						{
-							"name": "/sitemap-record.html reverse proxied",
-							"event": [
+							"name": "Entity API",
+							"item": [
 								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {",
-											"  pm.response.to.have.status(200);",
-											"});",
-											"",
-											"pm.test(\"Requests are reverse proxied\", function () {",
-											"  pm.response.to.have.header(\"Content-Type\");",
-											"  pm.response.to.be.header(\"Content-Type\", \"text/xml;charset=UTF-8\");",
-											"});",
-											"",
-											"pm.test(\"Body matches string\", function () {",
-											"  pm.expect(pm.response.text()).to.include(\"https://www.europeana.eu/en/item\");",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{ORIGIN}}/sitemap-record.xml?from=1&to=45000",
-									"host": [
-										"{{ORIGIN}}"
-									],
-									"path": [
-										"sitemap-record.xml"
-									],
-									"query": [
+									"name": "/api/entities",
+									"event": [
 										{
-											"key": "from",
-											"value": "1"
-										},
-										{
-											"key": "to",
-											"value": "45000"
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"  pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Requests are reverse proxied\", function () {",
+													"  const jsonData = pm.response.json();",
+													"  pm.expect(jsonData['@context']).to.eql(\"http://www.europeana.eu/schemas/context/entity.jsonld\");",
+													"});"
+												],
+												"type": "text/javascript"
+											}
 										}
-									]
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{ORIGIN}}/api/entities/search?query=*:*&wskey=apidemo&pageSize=0",
+											"host": [
+												"{{ORIGIN}}"
+											],
+											"path": [
+												"api",
+												"entities",
+												"search"
+											],
+											"query": [
+												{
+													"key": "query",
+													"value": "*:*"
+												},
+												{
+													"key": "wskey",
+													"value": "apidemo"
+												},
+												{
+													"key": "pageSize",
+													"value": "0"
+												}
+											]
+										}
+									},
+									"response": []
 								}
-							},
-							"response": []
+							]
 						},
 						{
-							"name": "/sitemap-entity-index.html reverse proxied Copy",
-							"event": [
+							"name": "Fulltext API",
+							"item": [
 								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {",
-											"  pm.response.to.have.status(200);",
-											"});",
-											"",
-											"pm.test(\"Requests are reverse proxied\", function () {",
-											"  pm.response.to.have.header(\"Content-Type\");",
-											"  pm.response.to.be.header(\"Content-Type\", \"text/xml;charset=UTF-8\");",
-											"});",
-											"",
-											"pm.test(\"Body matches string\", function () {",
-											"  pm.expect(pm.response.text()).to.include(\"https://www.europeana.eu/sitemap-entity.xml\");",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{ORIGIN}}/sitemap-entity-index.xml",
-									"host": [
-										"{{ORIGIN}}"
+									"name": "/api/fulltext",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"  pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Requests are reverse proxied\", function () {",
+													"  pm.response.to.have.header(\"Content-Type\");",
+													"  pm.response.to.be.header(\"Content-Type\", \"application/ld+json; profile=\\\"http://iiif.io/api/presentation/2/context.json\\\";charset=UTF-8\");",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
 									],
-									"path": [
-										"sitemap-entity-index.xml"
-									]
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{ORIGIN}}/api/fulltext/9200396/BibliographicResource_3000118436165/annopage/1",
+											"host": [
+												"{{ORIGIN}}"
+											],
+											"path": [
+												"api",
+												"fulltext",
+												"9200396",
+												"BibliographicResource_3000118436165",
+												"annopage",
+												"1"
+											]
+										}
+									},
+									"response": []
 								}
-							},
-							"response": []
+							]
 						},
 						{
-							"name": "/sitemap-entity.html reverse proxied",
+							"name": "Thumbnail API",
+							"item": [
+								{
+									"name": "/api/v2/thumbnail-by-url.json",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"  pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Requests are reverse proxied\", function () {",
+													"  pm.response.to.have.header(\"Content-Type\");",
+													"  pm.response.to.be.header(\"Content-Type\", \"image/jpeg\");",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{ORIGIN}}/api/v2/thumbnail-by-url.json?size=w400&type=IMAGE&uri=https%3A%2F%2Fwww.rijksmuseum.nl%2Fassetimage2.jsp%3Fid%3DSK-A-2344",
+											"host": [
+												"{{ORIGIN}}"
+											],
+											"path": [
+												"api",
+												"v2",
+												"thumbnail-by-url.json"
+											],
+											"query": [
+												{
+													"key": "size",
+													"value": "w400"
+												},
+												{
+													"key": "type",
+													"value": "IMAGE"
+												},
+												{
+													"key": "uri",
+													"value": "https%3A%2F%2Fwww.rijksmuseum.nl%2Fassetimage2.jsp%3Fid%3DSK-A-2344"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Sitemap API",
+							"item": [
+								{
+									"name": "/sitemap-record-index.html",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"  pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Requests are reverse proxied\", function () {",
+													"  pm.response.to.have.header(\"Content-Type\");",
+													"  pm.response.to.be.header(\"Content-Type\", \"text/xml;charset=UTF-8\");",
+													"});",
+													"",
+													"pm.test(\"Body matches string\", function () {",
+													"  pm.expect(pm.response.text()).to.include(\"https://www.europeana.eu/sitemap-record.xml\");",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{ORIGIN}}/sitemap-record-index.xml",
+											"host": [
+												"{{ORIGIN}}"
+											],
+											"path": [
+												"sitemap-record-index.xml"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "/sitemap-record.html",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"  pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Requests are reverse proxied\", function () {",
+													"  pm.response.to.have.header(\"Content-Type\");",
+													"  pm.response.to.be.header(\"Content-Type\", \"text/xml;charset=UTF-8\");",
+													"});",
+													"",
+													"pm.test(\"Body matches string\", function () {",
+													"  pm.expect(pm.response.text()).to.include(\"https://www.europeana.eu/en/item\");",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{ORIGIN}}/sitemap-record.xml?from=1&to=45000",
+											"host": [
+												"{{ORIGIN}}"
+											],
+											"path": [
+												"sitemap-record.xml"
+											],
+											"query": [
+												{
+													"key": "from",
+													"value": "1"
+												},
+												{
+													"key": "to",
+													"value": "45000"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "/sitemap-entity-index.html",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"  pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Requests are reverse proxied\", function () {",
+													"  pm.response.to.have.header(\"Content-Type\");",
+													"  pm.response.to.be.header(\"Content-Type\", \"text/xml;charset=UTF-8\");",
+													"});",
+													"",
+													"pm.test(\"Body matches string\", function () {",
+													"  pm.expect(pm.response.text()).to.include(\"https://www.europeana.eu/sitemap-entity.xml\");",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{ORIGIN}}/sitemap-entity-index.xml",
+											"host": [
+												"{{ORIGIN}}"
+											],
+											"path": [
+												"sitemap-entity-index.xml"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "/sitemap-entity.html",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"  pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Requests are reverse proxied\", function () {",
+													"  pm.response.to.have.header(\"Content-Type\");",
+													"  pm.response.to.be.header(\"Content-Type\", \"text/xml;charset=UTF-8\");",
+													"});",
+													"",
+													"pm.test(\"Body matches string\", function () {",
+													"  pm.expect(pm.response.text()).to.include(\"https://www.europeana.eu/en/collections\");",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{ORIGIN}}/sitemap-entity.xml?from=1&to=15000",
+											"host": [
+												"{{ORIGIN}}"
+											],
+											"path": [
+												"sitemap-entity.xml"
+											],
+											"query": [
+												{
+													"key": "from",
+													"value": "1"
+												},
+												{
+													"key": "to",
+													"value": "15000"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Record API",
+							"item": [
+								{
+									"name": "Redirect http:// to https://",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 301\", function () {",
+													"  pm.response.to.have.status(301);",
+													"});",
+													"",
+													"const location = pm.request.url.toString().replace('http://', 'https://');",
+													"",
+													"pm.test(`Location is ${location}`, function () {",
+													"  pm.response.to.have.header(\"Location\");",
+													"  pm.response.to.be.header(\"Location\", location);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "X-Forwarded-Proto",
+												"value": "http",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{ORIGIN}}/api/v2/search.json",
+											"host": [
+												"{{ORIGIN}}"
+											],
+											"path": [
+												"api",
+												"v2",
+												"search.json"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "/api",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"  pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Requests are reverse proxied\", function () {",
+													"  const jsonData = pm.response.json();",
+													"  pm.expect(jsonData.info.title).to.eql(\"Europeana Search & Record API\");",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{ORIGIN}}/api/api-docs",
+											"host": [
+												"{{ORIGIN}}"
+											],
+											"path": [
+												"api",
+												"api-docs"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Portal",
+					"item": [
+						{
+							"name": "Other requests",
 							"event": [
 								{
 									"listen": "test",
@@ -1371,11 +1516,7 @@
 											"",
 											"pm.test(\"Requests are reverse proxied\", function () {",
 											"  pm.response.to.have.header(\"Content-Type\");",
-											"  pm.response.to.be.header(\"Content-Type\", \"text/xml;charset=UTF-8\");",
-											"});",
-											"",
-											"pm.test(\"Body matches string\", function () {",
-											"  pm.expect(pm.response.text()).to.include(\"https://www.europeana.eu/en/collections\");",
+											"  pm.response.to.be.header(\"Content-Type\", \"text/html; charset=utf-8\");",
 											"});"
 										],
 										"type": "text/javascript"
@@ -1386,114 +1527,61 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{ORIGIN}}/sitemap-entity.xml?from=1&to=15000",
+									"raw": "{{ORIGIN}}/en",
 									"host": [
 										"{{ORIGIN}}"
 									],
 									"path": [
-										"sitemap-entity.xml"
-									],
-									"query": [
-										{
-											"key": "from",
-											"value": "1"
-										},
-										{
-											"key": "to",
-											"value": "15000"
-										}
+										"en"
 									]
 								}
 							},
 							"response": []
 						}
 					]
-				},
+				}
+			]
+		},
+		{
+			"name": "GZIP",
+			"item": [
 				{
-					"name": "Record API",
-					"item": [
+					"name": "Enabled for text/html",
+					"event": [
 						{
-							"name": "Redirect http:// to https://",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 301\", function () {",
-											"  pm.response.to.have.status(301);",
-											"});",
-											"",
-											"const location = pm.request.url.toString().replace('http://', 'https://');",
-											"",
-											"pm.test(`Location is ${location}`, function () {",
-											"  pm.response.to.have.header(\"Location\");",
-											"  pm.response.to.be.header(\"Location\", location);",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "X-Forwarded-Proto",
-										"value": "http",
-										"type": "text"
-									}
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response is compressed\", function () {",
+									"  pm.response.to.have.header(\"Content-Type\");",
+									"  pm.response.to.be.header(\"Content-Type\", \"text/html; charset=utf-8\");",
+									"  pm.response.to.have.header(\"Content-Encoding\");",
+									"  pm.response.to.be.header(\"Content-Encoding\", \"gzip\");",
+									"});"
 								],
-								"url": {
-									"raw": "{{ORIGIN}}/api/v2/search.json",
-									"host": [
-										"{{ORIGIN}}"
-									],
-									"path": [
-										"api",
-										"v2",
-										"search.json"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "/api reverse proxied",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Status code is 200\", function () {",
-											"  pm.response.to.have.status(200);",
-											"});",
-											"",
-											"pm.test(\"Requests are reverse proxied\", function () {",
-											"  const jsonData = pm.response.json();",
-											"  pm.expect(jsonData.info.title).to.eql(\"Europeana Search & Record API\");",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{ORIGIN}}/api/api-docs",
-									"host": [
-										"{{ORIGIN}}"
-									],
-									"path": [
-										"api",
-										"api-docs"
-									]
-								}
-							},
-							"response": []
+								"type": "text/javascript"
+							}
 						}
-					]
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ORIGIN}}/en/about-us",
+							"host": [
+								"{{ORIGIN}}"
+							],
+							"path": [
+								"en",
+								"about-us"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
