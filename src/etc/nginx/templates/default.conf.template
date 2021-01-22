@@ -179,7 +179,5 @@ server {
     set $url ${PORTAL_URL};
     proxy_pass $url;
     proxy_set_header Host ${PORTAL_HOST};
-    # TODO: handle case where X-Forwarded-Proto is not present, using $scheme instead
-    # proxy_redirect / $http_x_forwarded_proto://$host/;
   }
 }

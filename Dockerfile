@@ -23,4 +23,3 @@ RUN mv /docker-entrypoint.sh /docker-entrypoint-nginx.sh && \
     rm -r /usr/share/nginx/html
 
 COPY src .
-RUN ls -al && ls -al /usr/share/nginx/html && ls -al /etc/nginx/conf.d
