@@ -101,10 +101,8 @@ server {
   }
 
   # TODO:
-  # * CORS
   # * deploy/ dir for CF w/ Jenkins Pipeline
   # * Disallow robots if env var DISALLOW_ROBOTS is set to 1
   # * Old locations for some pages we need to be backwards compatible with
   # * Obsolete and invalid pages
-  # * Other static files
 }
