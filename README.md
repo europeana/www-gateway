@@ -103,11 +103,10 @@ docker-compose -f test/docker-compose.yml build
 docker-compose -f test/docker-compose.yml run test
 ```
 
+
 ## TODO
 
-* Deployment scripts for Cloud Foundry, with Jenkins Pipeline
-* Auto-build and publish Docker images when main branch is tagged, with GitHub
-  Actions
+* Deployment scripts for Cloud Foundry, with GitHub Actions, or Jenkins Pipeline
 * In test suite Docker Compose, mock APIs and Portal to prevent requests to live
   services
 
