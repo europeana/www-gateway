@@ -1235,6 +1235,91 @@
 							"name": "Sitemap API",
 							"item": [
 								{
+									"name": "Legacy",
+									"item": [
+										{
+											"name": "/portal/europeana-sitemap-index-hashed.xml",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 200\", function () {",
+															"  pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Body matches string\", function () {",
+															"  pm.expect(pm.response.text()).to.include(\"https://www.europeana.eu/sitemap-record.xml\");",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{ORIGIN}}/portal/europeana-sitemap-index-hashed.xml",
+													"host": [
+														"{{ORIGIN}}"
+													],
+													"path": [
+														"portal",
+														"europeana-sitemap-index-hashed.xml"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "/portal/europeana-sitemap-hashed.xml",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Status code is 200\", function () {",
+															"  pm.response.to.have.status(200);",
+															"});",
+															"",
+															"pm.test(\"Requests are reverse proxied\", function () {",
+															"  pm.expect(pm.response.text()).to.include(\"https://www.europeana.eu/en/item\");",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{ORIGIN}}/portal/europeana-sitemap-hashed.xml?from=1575000&to=1620000",
+													"host": [
+														"{{ORIGIN}}"
+													],
+													"path": [
+														"portal",
+														"europeana-sitemap-hashed.xml"
+													],
+													"query": [
+														{
+															"key": "from",
+															"value": "1575000"
+														},
+														{
+															"key": "to",
+															"value": "1620000"
+														}
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
 									"name": "/sitemap-record-index.html",
 									"event": [
 										{

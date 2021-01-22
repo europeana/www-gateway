@@ -64,6 +64,11 @@ server {
     proxy_pass ${SITEMAP_API_URL}/$2$1$is_args$args;
     proxy_set_header Host ${SITEMAP_API_HOST};
   }
+  # Legacy URLs, kept until all search engines use newer (see previous location)
+  location ~ ^/portal(/europeana-sitemap(-index)?-hashed\.xml)$ {
+    proxy_pass ${SITEMAP_API_URL}/sitemap/$1$is_args$args;
+    proxy_set_header Host ${SITEMAP_API_HOST};
+  }
 
   # Thumbnail API, v2 only
   location = /api/v2/thumbnail-by-url.json {
@@ -101,6 +106,5 @@ server {
   # * Disallow robots if env var DISALLOW_ROBOTS is set to 1
   # * Old locations for some pages we need to be backwards compatible with
   # * Obsolete and invalid pages
-  # * Old style sitemap requests - STILL NEEDED?
   # * Other static files
 }
