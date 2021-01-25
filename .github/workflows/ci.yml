@@ -5,10 +5,25 @@ on:
     branches: main
     tags:
       - 'v*.*.*'
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: main
 
 jobs:
-  build:
-    name: Build
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+    -
+      name: Checkout
+      uses: actions/checkout@v2
+    - name: Test
+      run: docker-compose -f test/docker-compose.yml run test
+
+  publish:
+    name: Publish to Docker Hub
+    if: github.event_name == 'push'
+    needs: [test]
     runs-on: ubuntu-latest
     steps:
       -
@@ -50,31 +65,10 @@ jobs:
       docker-image-digest: ${{ steps.docker_build.outputs.digest }}
 
   deploy-main-to-test:
-    name: Deploy main to test
+    name: Deploy main branch to test environment
     if: github.ref == 'refs/heads/main'
     environment: test
-    needs: [build]
-    runs-on: ubuntu-latest
-    steps:
-      -
-        name: Checkout
-        uses: actions/checkout@v2
-      -
-        name: Deploy to Cloud Foundry
-        uses: ./.github/actions/cloud-foundry-deploy
-        with:
-          api: ${{ secrets.CF_API }}
-          username: ${{ secrets.CF_USERNAME }}
-          password: ${{ secrets.CF_PASSWORD }}
-          org: ${{ secrets.CF_ORG }}
-          space: ${{ secrets.CF_SPACE }}
-          image: europeana/www-gateway@${{ needs.build.outputs.docker-image-digest }}
-
-  deploy-tag-to-production:
-    name: Deploy tag to production
-    if: startsWith(github.ref, 'refs/tags/v')
-    environment: production
-    needs: [build]
+    needs: [publish]
     runs-on: ubuntu-latest
     steps:
       -
@@ -90,4 +84,26 @@ jobs:
           org: ${{ secrets.CF_ORG }}
           space: ${{ secrets.CF_SPACE }}
           app-name: ${{ secrets.CF_APP_NAME }}
-          docker-image: europeana/www-gateway@${{ needs.build.outputs.docker-image-digest }}
+          docker-image: europeana/www-gateway@${{ needs.publish.outputs.docker-image-digest }}
+
+  deploy-tag-to-production:
+    name: Deploy tag to production environment
+    if: startsWith(github.ref, 'refs/tags/v')
+    environment: production
+    needs: [publish]
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v2
+      -
+        name: Deploy to Cloud Foundry
+        uses: ./.github/actions/cloud-foundry-deploy
+        with:
+          api: ${{ secrets.CF_API }}
+          username: ${{ secrets.CF_USERNAME }}
+          password: ${{ secrets.CF_PASSWORD }}
+          org: ${{ secrets.CF_ORG }}
+          space: ${{ secrets.CF_SPACE }}
+          app-name: ${{ secrets.CF_APP_NAME }}
+          docker-image: europeana/www-gateway@${{ needs.publish.outputs.docker-image-digest }}
