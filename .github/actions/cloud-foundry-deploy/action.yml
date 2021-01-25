@@ -26,9 +26,9 @@ runs:
   image: 'Dockerfile'
   args:
     - ${{ inputs.api }}
-    - ${{ inputs.org }}
     - ${{ inputs.username }}
     - ${{ inputs.password }}
+    - ${{ inputs.org }}
     - ${{ inputs.space }}
     - ${{ inputs.app-name }}
     - ${{ inputs.docker-image }}
