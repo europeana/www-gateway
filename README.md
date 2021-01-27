@@ -22,7 +22,7 @@ docker build -t europeana/www-gateway .
 
 Run:
 ```
-docker run -n europeana-www-gateway -p 8080:80 -d europeana/www-gateway
+docker run --name europeana-www-gateway -p 8080:80 -d europeana/www-gateway
 ```
 
 The gateway is now accessible at http://localhost:8080.
@@ -82,7 +82,7 @@ The test suite is run on pull requests and pushes to the main branch via a
 1. Build and run with Docker:
     ```
     docker build -t europeana/www-gateway .
-    docker run -e PORT=8080 -p 8080:8080 --name europeana-www-gateway --rm europeana/www-gateway
+    docker --name europeana-www-gateway run -e PORT=8080 -p 8080:8080 --rm europeana/www-gateway
     ```
 2. Test:
     Open the collection file [test/postman_collection.json](./test/postman_collection.json)
