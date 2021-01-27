@@ -110,13 +110,6 @@ server {
     return 301 /item/$1/$2;
   }
 
-  # Enforce https:// on Record API v2 requests
-  location ~ ^/api/v2(.*)$ {
-    if ($http_x_forwarded_proto = "http") {
-      return 301 https://$host$request_uri;
-    }
-  }
-
   # Annotation API
   location ~ ^/api/annotations/(.*) {
     set $url ${ANNOTATION_API_URL};
@@ -152,14 +145,24 @@ server {
   }
 
   # Thumbnail API, v2 only
-  location = /api/v2/thumbnail-by-url.json {
+  location /api/v2/thumbnail-by-url.json {
     set $url ${THUMBNAIL_API_URL};
     proxy_pass $url;
     proxy_set_header Host ${THUMBNAIL_API_HOST};
   }
 
+  location /api/v2 {
+    # Enforce https:// on Record API v2 requests
+    if ($http_x_forwarded_proto = "http") {
+      return 301 https://$host$request_uri;
+    }
+    set $url ${RECORD_API_URL};
+    proxy_pass $url;
+    proxy_set_header Host ${RECORD_API_HOST};
+  }
+
   # Record API
-  location ~ ^/api {
+  location /api {
     set $url ${RECORD_API_URL};
     proxy_pass $url;
     proxy_set_header Host ${RECORD_API_HOST};
