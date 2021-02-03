@@ -1,8 +1,10 @@
 server {
-  listen       ${PORT};
-  server_name  localhost;
+  listen ${PORT};
+  server_name localhost;
 
-  resolver ${RESOLVER};
+  # IPv6 switched off to prevent errors re "Address family not supported by protocol"
+  # on Cloud Foundry.
+  resolver ${RESOLVER} ipv6=off;
 
   # Set port_in_redirect from env var PORT_IN_REDIRECT
   port_in_redirect "${PORT_IN_REDIRECT}";

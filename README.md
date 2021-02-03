@@ -37,7 +37,7 @@ image.
 * `PORT`: the TCP port on which to listen for HTTP requests; default 80
 * `RESOLVER`: the address of DNS resolver(s) to use for upstream server hostname
   resolution; defaults to that in the container's /etc/resolv.conf at runtime
-  via [docker-entrypoint.sh](./docker-entrypoint.sh)
+  via [docker-entrypoint.sh](./src/docker-entrypoint.sh)
 * `DISALLOW_ROBOTS`: if "true", robots will be blocked from crawling site, via
   robots.txt; default "false"
 * `PORT_IN_REDIRECT`: sets NGINX `port_in_redirect` to "on" or "off"; default
