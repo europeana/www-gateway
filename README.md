@@ -61,13 +61,10 @@ request, which may (or may not) need to be a publicly accessible one, depending
 on the upstream service.
 Examples: `api.europeana.eu`; `portal.europeana.eu`
 
-* `ANNOTATION_API_URL` & `ANNOTATION_API_HOST`: Annotation API
-* `ENTITY_API_URL` & `ENTITY_API_HOST`: Entity API
-* `FULLTEXT_API_URL` & `FULLTEXT_API_HOST`: Fulltext API
+* `API_GATEWAY_URL` & `API_GATEWAY_HOST`: API gateway, for Annotation, Entity,
+  Fulltext, Record and Thumbnail APIs
 * `PORTAL_URL` & `PORTAL_HOST`: Portal website
-* `RECORD_API_URL` & `RECORD_API_HOST`: Record API
 * `SITEMAP_API_URL` & `SITEMAP_API_HOST`: Sitemap API
-* `THUMBNAIL_API_URL` & `THUMBNAIL_API_HOST`: Thumbnail API
 
 
 ## Testing

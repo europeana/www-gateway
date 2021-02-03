@@ -114,23 +114,23 @@ server {
 
   # Annotation API
   location ~ ^/api/annotations/(.*) {
-    set $url ${ANNOTATION_API_URL};
+    set $url ${API_GATEWAY_URL};
     proxy_pass $url/annotation/$1$is_args$args;
-    proxy_set_header Host ${ANNOTATION_API_HOST};
+    proxy_set_header Host ${API_GATEWAY_HOST};
   }
 
   # Entity API
   location ~ ^/api/entities/(.*) {
-    set $url ${ENTITY_API_URL};
+    set $url ${API_GATEWAY_URL};
     proxy_pass $url/entity/$1$is_args$args;
-    proxy_set_header Host ${ENTITY_API_HOST};
+    proxy_set_header Host ${API_GATEWAY_HOST};
   }
 
   # Fulltext API
   location ~ ^/api/fulltext/(.*) {
-    set $url ${FULLTEXT_API_URL};
+    set $url ${API_GATEWAY_URL};
     proxy_pass $url/presentation/$1$is_args$args;
-    proxy_set_header Host ${FULLTEXT_API_HOST};
+    proxy_set_header Host ${API_GATEWAY_HOST};
   }
 
   # Sitemap API
@@ -148,9 +148,9 @@ server {
 
   # Thumbnail API, v2 only
   location /api/v2/thumbnail-by-url.json {
-    set $url ${THUMBNAIL_API_URL};
+    set $url ${API_GATEWAY_URL};
     proxy_pass $url;
-    proxy_set_header Host ${THUMBNAIL_API_HOST};
+    proxy_set_header Host ${API_GATEWAY_HOST};
   }
 
   location /api/v2 {
@@ -158,16 +158,16 @@ server {
     if ($http_x_forwarded_proto = "http") {
       return 301 https://$host$request_uri;
     }
-    set $url ${RECORD_API_URL};
+    set $url ${API_GATEWAY_URL};
     proxy_pass $url;
-    proxy_set_header Host ${RECORD_API_HOST};
+    proxy_set_header Host ${API_GATEWAY_HOST};
   }
 
   # Record API
   location /api {
-    set $url ${RECORD_API_URL};
+    set $url ${API_GATEWAY_URL};
     proxy_pass $url;
-    proxy_set_header Host ${RECORD_API_HOST};
+    proxy_set_header Host ${API_GATEWAY_HOST};
   }
 
   # Serve static files
