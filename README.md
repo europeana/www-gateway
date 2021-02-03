@@ -82,7 +82,7 @@ The test suite is run on pull requests and pushes to the main branch via a
 1. Build and run with Docker:
     ```
     docker build -t europeana/www-gateway .
-    docker --name europeana-www-gateway run -e PORT=8080 -p 8080:8080 --rm europeana/www-gateway
+    docker run --name europeana-www-gateway -e PORT=8080 -p 8080:8080 --rm europeana/www-gateway
     ```
 2. Test:
     Open the collection file [test/postman_collection.json](./test/postman_collection.json)
