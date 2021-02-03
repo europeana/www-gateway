@@ -172,6 +172,9 @@ server {
 
   # Cache Nuxt assets from portal. These always include a digest in the
   # filename/URL, so can be safely cached indefinitely.
+  #
+  # TODO: have portal.js deployments push these files to an actual CDN and proxy
+  #       to that instead.
   location /_nuxt {
     proxy_ignore_headers Set-Cookie;
     proxy_set_header Host ${PORTAL_HOST};
