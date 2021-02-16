@@ -1,5 +1,7 @@
 # Europeana WWW gateway
 
+Proof-of-concept only.
+
 ![test](https://github.com/europeana/www-gateway/workflows/test/badge.svg)
 
 NGINX HTTP gateway for www.europeana.eu as a Docker image.
